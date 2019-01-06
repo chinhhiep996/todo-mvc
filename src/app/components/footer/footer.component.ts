@@ -13,7 +13,7 @@ export class FooterComponent implements OnInit {
     { type: Filter.Completed, label: 'Completed', isActice: false }
   ];
 
-  length = 0;
+  length = 2;
 
   constructor() { }
 

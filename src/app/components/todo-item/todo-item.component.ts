@@ -1,10 +1,37 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Todo } from 'src/app/modules/todo.module';
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { Todo } from "src/app/modules/todo.module";
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from "@angular/animations";
+
+const fadeStrikeThroughAnimation = trigger("fadeStrikeThrough", [
+  state(
+    "active",
+    style({
+      fontSize: "18px",
+      color: "black"
+    })
+  ),
+  state(
+    "completed",
+    style({
+      fontSize: "17px",
+      color: "lightgrey",
+      textDecoration: "line-through"
+    })
+  ),
+  transition("active <=> completed", [animate(250)])
+]);
 
 @Component({
-  selector: 'app-todo-item',
-  templateUrl: './todo-item.component.html',
-  styleUrls: ['./todo-item.component.scss']
+  selector: "app-todo-item",
+  templateUrl: "./todo-item.component.html",
+  styleUrls: ["./todo-item.component.scss"],
+  animations: [fadeStrikeThroughAnimation]
 })
 export class TodoItemComponent implements OnInit {
   @Input() todo: Todo;
@@ -33,6 +60,9 @@ export class TodoItemComponent implements OnInit {
   }
 
   changeTodoStatus() {
-    this.changeStatus.emit({...this.todo, isCompleted: !this.todo.isCompleted});
+    this.changeStatus.emit({
+      ...this.todo,
+      isCompleted: !this.todo.isCompleted
+    });
   }
 }
